@@ -1,7 +1,7 @@
 #!/usr/bin/evn python
 # -*- encoding:utf-8 -*-
 # function: connect exsi server api  for restart vm
-# date:2020-06-09
+# date:2020-06-10
 # Arthor:Timbaland
 
 from tkinter import *
