@@ -85,8 +85,8 @@ class VcentTools():
             return 0
         if vm.is_powered_off() == False:
             try:
-                # vm.reset()
-                vm.power_off()
+                vm.reset()
+                # vm.power_off()
 
                 # print (type(int(vm_hz)))
                 # for i in range(1, int(vm_hz)):
