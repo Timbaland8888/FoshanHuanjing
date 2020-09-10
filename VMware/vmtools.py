@@ -1,4 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/evn python
+# -*- encoding:utf-8 -*-
+# function: connect exsi server api  for restart vm
+# date:2020-09-09
+# Arthor:Timbaland
 """
 get vc vname
 """
