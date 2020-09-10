@@ -1,7 +1,7 @@
 #!/usr/bin/evn python
 # -*- encoding:utf-8 -*-
 # function: connect exsi server api  for restart vm
-# date:2020-06-10
+# date:2020-06-09
 # Arthor:Timbaland
 
 from tkinter import *
@@ -69,7 +69,7 @@ class Wroot():
             classroom,pvs_vdisk = classroom.split('<-->')
             classroom = classroom.strip()
             #判断是该重置虚拟机还是清空数据盘
-            if var.get() == '定时关闭所有教室桌面' :
+            if var.get() == '定时重置所有教室桌面' :
                 root.withdraw()
                 cf = configparser.ConfigParser()
                 cf.read_file(codecs.open('config.ini', "r", "utf-8-sig"))
@@ -122,11 +122,12 @@ class Wroot():
         cf.read_file(codecs.open('config.ini', "r", "utf-8-sig"))
         l = Con_mysql(cf.get('hj_db', 'db_host'), cf.get('hj_db', 'db_user'), cf.get('hj_db', 'db_pwd'),
                       cf.get('hj_db', 'db'))
-        listroom = l.query("""select DISTINCT CONCAT(d.classroom_name,' <-->',template_name)
-                            from  hj_dg a
-                            INNER JOIN hj_vm b on a.id = b.dg_id
-                            INNER JOIN hj_template c on c.id = b.template_id
-                            INNER JOIN hj_classroom d on d.id = a.classroom_id
+        listroom = l.query("""SELECT DISTINCT CONCAT(a.classroom_name,' <-->',d.template_name)
+                                from hj_classroom  a
+                                INNER JOIN hj_dg b on a.classroom_tag=b.dg_name
+                                INNER JOIN hj_vm c on c.dg_id =b.id
+                                INNER JOIN hj_template d on d.id = c.template_id
+                                WHERE a.classroom_name = '教室203'
                                                             """)
         newlistroom = []
         for i in listroom:
@@ -136,7 +137,7 @@ class Wroot():
         comboxlist.bind("<<ComboboxSelected>>", )  # 绑定事件,(下拉列表框被选中时，绑定go()函数)
         comboxlist.place(x=60, y=40)
         var = StringVar()
-        r1 = Radiobutton(root, text='定时关闭所有教室桌面', bg='#C0FF3E', variable=var, value='定时关闭所有教室桌面', command=_selection1)
+        r1 = Radiobutton(root, text='定时重置所有教室桌面', bg='#C0FF3E', variable=var, value='定时重置所有教室桌面', command=_selection1)
         r1.select()
         r1.place(x=10, y=100)
         r2 = Radiobutton(root, text='清空数据盘', bg='#C0FF3E', variable=var, value='清空虚拟机数据盘', command=_selection2)
